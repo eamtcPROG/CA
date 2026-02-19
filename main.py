@@ -1,4 +1,8 @@
-ALPHABET = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+import os
+import itertools
+
+ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 
 def encrypt(plain_text, key):
     plain_text = plain_text.upper().replace(' ', '')
@@ -37,11 +41,41 @@ def decrypt(cipher_text, key):
 
     return plain_text
 
-if __name__ == '__main__':
-    plain_text = input("Enter the plain text: ")
-    key = input("Enter the key: ")
-    encrypted_text = encrypt(plain_text, key)
-    decrypted_text = decrypt(encrypted_text, key)
+def frequency_analysis(text):
+    # the text we analyse
+    text = text.upper().replace(' ', '')
 
-    print("Encrypted text: ", encrypted_text)
-    print("Decrypted text: ", decrypted_text)
+    # we use a dictionary to store the letter-frequency pair
+    letter_frequencies = {}
+
+    # initialize the dictionary (of course with 0 frequencies)
+    for letter in ALPHABET:
+        letter_frequencies[letter] = 0
+
+    # let's consider the text we want to analyse
+    for letter in text:
+        if letter in ALPHABET:
+            letter_frequencies[letter] += 1
+
+    return letter_frequencies
+
+
+def plot_distribution(frequencies):
+    import matplotlib.pylab as plt
+    plt.bar(frequencies.keys(), frequencies.values())
+    plt.show()
+
+
+
+if __name__ == '__main__':
+    plain_text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG AND THE DOG JUMPS OVER THE FOX AND THE FOX JUMPS OVER THE DOG"
+    key = "SECRET"
+
+    encrypted_text = encrypt(plain_text, key)
+    print("Original plaintext:", plain_text)
+    print("Key:", key)
+    print("Encrypted text:", encrypted_text)
+
+    frequency_analysis = frequency_analysis(encrypted_text)
+    print("Frequency analysis:", frequency_analysis)
+    plot_distribution(frequency_analysis)
