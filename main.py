@@ -212,7 +212,7 @@ if __name__ == '__main__':
     plain_text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG AND THE DOG JUMPS OVER THE FOX AND THE FOX JUMPS OVER THE DOG"
     # Repeat to get longer ciphertext so frequency-based key recovery is reliable (~17 chars/stream is too few)
     plain_text = (plain_text + " ") * 2
-    key = "HELPER"
+    key = "TABLE"
 
     encrypted_text = encrypt(plain_text, key)
     print("Original plaintext:", plain_text)
@@ -249,5 +249,8 @@ if __name__ == '__main__':
     # Streams for the estimated key length (m = k_length)
     streams_for_key = string_based_length[k_length - 1]
     keys = get_possible_keys(streams_for_key, STANDARD_ENGLISH_FREQUENCY)
-    print("Possible key letter(s) per position:", keys)
-    print("Recovered key (first candidate per position):", "".join(c[0] for c in keys))
+    print("Possible key letter:", keys)
+    recovered_key = "".join(c[0] for c in keys)
+    print("Recovered key:", recovered_key)
+    recovered_plaintext = decrypt(encrypted_text, recovered_key)
+    print("Recovered plaintext:", recovered_plaintext)
