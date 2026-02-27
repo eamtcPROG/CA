@@ -98,13 +98,18 @@ def bytes_to_binary(data):
 
 if __name__ == "__main__":
     key = generate_key()
-    nonce = generate_nonce(2)
-    plaintext = b"Secret message here My name is Mihai"
+    nonce = generate_nonce(1)
+    plaintext = b"Secret message: My name is Mihai, and I'm a student at the UTM"
 
     cipher = encrypt(plaintext, key, nonce)
     decrypted = decrypt(cipher, key, nonce)
 
     print("Key:", bytes_to_binary(key))
     print("Nonce:", bytes_to_binary(nonce))
+    print("Cipher text:", bytes_to_binary(cipher))
+    print("Decrypted text:", decrypted.decode('utf-8'))
+    nonce = generate_nonce(2)
+    cipher = encrypt(plaintext, key, nonce)
+    decrypted = decrypt(cipher, key, nonce)
     print("Cipher text:", bytes_to_binary(cipher))
     print("Decrypted text:", decrypted.decode('utf-8'))
